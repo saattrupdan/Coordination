@@ -20,12 +20,10 @@ class Coordinator(nn.Module):
         return torch.norm(torch.sub(X[:, None], X), dim = -1)
 
     def compile(self, nepochs: int = 200, batch_size: int = 32):
-
         N: int = self.coords.shape[0]
         ema: float = 0.
         ema_factor: float = batch_size / N
         idxs: np.array = np.arange(N)
-        batches: np.array
         nbatches: int = N // batch_size
         nbatches = nbatches + 1 if N % batch_size else nbatches
         niter: int = 0
@@ -59,7 +57,7 @@ class Coordinator(nn.Module):
         if self.coords.shape[1] > 2:
             raise RuntimeError('Cannot plot coordinates in dimensions > 2')
         else:
-            return self
+            raise NotImplementedError('Cannot plot yet!')
 
     def score(self):
         with torch.no_grad():
